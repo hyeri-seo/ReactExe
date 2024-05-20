@@ -5,6 +5,10 @@ import './App.css';
 // import ValidationSample from './ex04_create_ref/ValidationSample';
 import ScrollBox from './ex05_component_ref/ScrollBox';
 
+/*
+ref는 html 엘리먼트를 가리킬 때 사용하고,
+우리가 만든 컴포넌트를 가리킬 때도 사용함
+*/
 class App extends Component {
   // return <ValidationSample/>
   // return <ScrollBox/>

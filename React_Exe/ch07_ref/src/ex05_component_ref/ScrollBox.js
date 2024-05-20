@@ -1,9 +1,17 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 class ScrollBox extends Component {
-
+    // 스크롤바를 가장 아래로 내리도록 위치
     scrollToBottom = () => {
         const {scrollHeight, clientHeight} = this.box;
+        /* 앞 코드에는 비구조화 할당 문법을 사용했음
+        아래 코드와 같은 의미
+        const scrollHeight = this.box.scrollHeight;
+        const clientHeight = this.box.cliengHeight;
+        */
+    //    scrollTop: 세로 스크롤바 위치
+    //    scrollHeight: 스크롤이 있는 박스 안의 높이
+    //    clientHeight: 스크롤이 있는 박스의 높이
         this.box.scrollTop = scrollHeight - clientHeight;
     }
 
