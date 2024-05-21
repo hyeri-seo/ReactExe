@@ -46,7 +46,12 @@ export default function SubApp() {
 
   return (
     <div>
-      <Header title="REACT" />
+      <Header
+        title="REACT"
+        onChangeMode={function () {
+          alert("Header");
+        }}
+      />
       <Nav topics={topics} />
       <Article title="Welcome" body="Hello, Web" />
     </div>
