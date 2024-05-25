@@ -5,7 +5,10 @@ function Header(props){
   return (
     <header>
       <h1>
-        <a href="/">{props.title}</a>
+        <a href="/" onClick={(event)=>{
+          event.preventDefault();
+          props.onChangeMode();
+        }}>{props.title}</a>
       </h1>
     </header>
   )
@@ -17,7 +20,7 @@ function Nav(props){
   const lis = [];
   for(let i=0;i<props.topics.length;i++){
     let t = props.topics[i];    // 부모로부터 전달된 객체를 1개씩 추출
-    lis.push(<li><a href={"/read/" + t.id}>{t.title}</a></li>);
+    lis.push(<li key={t.id}><a href={"/read/" + t.id}>{t.title}</a></li>);
   }
 
   return (
@@ -48,7 +51,9 @@ export default function SubApp(){
 
     return (
         <div>
-          <Header title='WEB' />
+          <Header title='WEB' onChangeMode={()=>{
+            alert('Header');
+          }} />
           <Nav topics={topics}/>
           <Article title='Welcome' body='Hello, Web' />
         </div>

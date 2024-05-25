@@ -1,7 +1,6 @@
 
 import {useState} from 'react';
 
-// 부모가 자식 컴포넌트에 값을 전달할 때는 props를 사용한다.
 function Header(props){
 
   return (
@@ -18,16 +17,14 @@ function Header(props){
 }
 
 function Nav(props){
-  // props로부터 받은 데이터를 <li></li>로 만들어서 lis에 저장
   const lis = [];
   for(let i=0;i<props.topics.length;i++){
-    let t = props.topics[i];    // 부모로부터 전달된 객체를 1개씩 추출
-    // onChageMode에 어떤 list가 호출되었는지 전달하기 위해서, '사용자 정의 속성'인 id를 저장한다
+    let t = props.topics[i];
     lis.push(<li key={t.id}>
               <a id={t.id} href={"/read/" + t.id}
                 onClick={event=>{
-                  event.preventDefault();   // <a>태그의 기본 동작 막기
-                  props.onChangeMode(event.target.id);     // props내의 onChangeMode에 전달된 함수 호출
+                  event.preventDefault();   
+                  props.onChangeMode(Number(event.target.id));    
                 }}>
                 {t.title}
               </a>
@@ -54,33 +51,50 @@ function Article(props){
 
 export default function SubApp(){
 
-  //let mode = 'WELCOME';   
-  const [mode, setMode] = useState('WELCOME');// 요소 클릭시 변경할 값 + 상태저장 + rendering
+  const [mode, setMode] = useState('WELCOME');
+  const [id, setId] = useState(null);       // nav의 어떤 항목(id)이 선택되었는지
   const topics = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ...'},
     {id:3, title:'javascript', body:'javascript is ...'},
   ]
-  // html 요소 클릭시 mode에 저장된 값에 따라서 content가 바뀌어서 보여진다.
+
   let content = null;
   
   if(mode === 'WELCOME'){
     content = <Article title='Welcome' body='Hello, Web'></Article>
+
   }else if(mode === 'READ'){
-    content = <Article title='Welcome' body='Hello, Read'></Article>
+    let title, body = null;
+    for(let i=0;i<topics.length;i++){
+      console.log(id, typeof id);
+      // 선택된 id와 같은 항목을 찾았으면
+      if(topics[i].id === id){
+        title = topics[i].title;
+        body = topics[i].body;
+        break;
+      }
+    }
+
+    content = <Article title={title} body={body}></Article>
+  }else if(mode === 'CREATE'){
+    
   }
 
     return (
         <div>
           <Header title='WEB' onChangeMode={()=>{
-            //mode = 'WELCOME';
             setMode('WELCOME');
           }} />
           <Nav topics={topics} onChangeMode={(id)=>{
-            //mode = 'READ';
             setMode('READ');
+            setId(id);      // nav의 리스트중에 어떤 항목(id)이 선택되었는지 알 수 있음
           }} />
           {content}
+          <a href='/create' onClick={event=>{
+            event.preventDefault();
+            setMode('CREATE');
+          }}>Create</a>
         </div>
       );
 }

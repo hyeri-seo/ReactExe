@@ -1,14 +1,21 @@
-function Header() {
+
+// 1) 리액트는 '사용자 정의 태그를 만드는 기술이다'
+// 2) 사용자 정의 태그 === 컴포넌트 === jsx객체
+// 3) 프론트 App을 컴포넌트의 조립형태로 구조화
+
+function Header(){
+
   return (
     <header>
       <h1>
         <a href="/">WEB</a>
       </h1>
     </header>
-  );
+  )
+  
 }
-function Nav() {
-  // 네비게이션 부분
+
+function Nav(){
   return (
     <nav>
       <ol>
@@ -23,28 +30,24 @@ function Nav() {
         </li>
       </ol>
     </nav>
-  );
+  )
 }
-function Article() {
-  // 본문(아티클) 부분
+
+function Article(){
   return (
     <article>
       <h2>Welcome</h2>
-      Hello, WEB <br />
-      <a href="/create">Create</a>
+      Hello, WEB
     </article>
-  );
+  )
 }
 
-export default function SubApp() {
-  return (
-    <div>
-      {/* ----------헤더 부분---------- */}
-      <Header />
-      {/* ----------네비게이션 부분---------- */}
-      <Nav />
-      {/* ----------본문 영역 부분---------- */}
-      <Article />
-    </div>
-  );
+export default function SubApp(){
+    return (
+        <div>
+          <Header/>
+          <Nav/>
+          <Article/>
+        </div>
+      );
 }
