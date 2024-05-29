@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import SubApp from './ex07_nav_link/SubApp';
+import SubApp from './ex08_nested_routing/SubApp';
 
 function App() {
   return <SubApp/>
