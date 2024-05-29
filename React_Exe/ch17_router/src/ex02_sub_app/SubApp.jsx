@@ -1,7 +1,6 @@
 import Home from './Home';
 import Topics from './Topics';
 import Contact from './Contact';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 function SubApp() {
     return (
