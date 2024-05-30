@@ -62,17 +62,23 @@ function PostViewPage(props) {
     return (
         <Wrapper>
             <Container>
-                <Button/>
+                <Button title='메인 Page 이동' onClick={() => {
+                    navigate('/');
+                }}/>
                 <PostContainer>
-                    <TitleText></TitleText>
-                    <ContentText></ContentText>
+                    <TitleText>{post.title}</TitleText>
+                    <ContentText>{post.content}</ContentText>
                 </PostContainer>
 
-                <CommentLabel></CommentLabel>
-                <CommentList/>
+                <CommentLabel>댓글</CommentLabel>
+                <CommentList comments={post.comments} />
 
-                <TextInput></TextInput>
-                <Button/>
+                <TextInput height={40} value={comment} onChange={(event) => {
+                    setComment(event.target.value);
+                }}></TextInput>
+                <Button title='댓글 작성하기' onClick={()=>{
+                    navigate('/');
+                }}/>
             </Container>
         </Wrapper>
     )
