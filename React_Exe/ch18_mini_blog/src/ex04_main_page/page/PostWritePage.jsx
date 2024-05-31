@@ -17,7 +17,5 @@ const Container = styled.div`
 `;
 
 function PostWritePage(props) {
-    return (
-        
-    )
+    return 
 }
