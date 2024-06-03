@@ -18,6 +18,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /*
 spring security 설정을 하게 되면
@@ -64,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // csrf보안은 세션을 활용하는데 Rest서버는 세션을 사용하지 않으므로 disable
         http.csrf().disable()
+                // CORS는 설정을 사용한다.
+                .cors().and()
                 .sessionManagement()
                 // Rest 서버는 세션 상태를 유지하지 않으므로 STATELESS
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -80,9 +87,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class);
     }
 
+    // CORS 자세한 설정 부분
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        super.configure(http);
-        return http.build();
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://www.bitcamp.co.kr"));
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("*"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowCredentials(false);
+        config.applyPermitDefaultValues();
+
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
