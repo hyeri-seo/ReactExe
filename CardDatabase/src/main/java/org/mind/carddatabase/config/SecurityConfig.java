@@ -1,6 +1,7 @@
 package org.mind.carddatabase.config;
 
 import lombok.RequiredArgsConstructor;
+import org.mind.carddatabase.component.AuthEntryPoint;
 import org.mind.carddatabase.filter.AuthenticationFilter;
 import org.mind.carddatabase.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final AuthenticationFilter authenticationFilter;
+    private final AuthEntryPoint authEntryPoint;
 
     // 사용자 인증을 위한 userDetailsService 설정/패스워드 암호화 알고리즘 설정
     // 암호를 DB에 저장하기 전에 BCrypt 암호화 처리
@@ -70,6 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 // 다른 요청을 인증 과정을 거쳐야 접근할 수 있음
                 .anyRequest().authenticated().and()
+                // 잘못된 인증 정보 요청 시, 오류 응답 처리를 authEntryPoint가 함
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint).and()
                 // /login을 제외한 나머지 모든 요청을 필터를 통과해야 정상 응답을 받을 수 있음
                 .addFilterBefore(authenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);
