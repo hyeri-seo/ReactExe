@@ -19,7 +19,7 @@ public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ownerid;
+    private Long ownerId;
 
     private String firstName;
     private String lastName;

@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.mind.carddatabase.domain.Car;
 import org.mind.carddatabase.domain.Owner;
+import org.mind.carddatabase.domain.User;
 import org.mind.carddatabase.repository.CarRepository;
 import org.mind.carddatabase.repository.OwnerRepository;
+import org.mind.carddatabase.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +21,7 @@ public class CardDatabaseApplication implements CommandLineRunner {
 
     private final OwnerRepository ownerRepository;
     private final CarRepository carRepository;
+    private final UserRepository userRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CardDatabaseApplication.class, args);
@@ -40,6 +43,7 @@ public class CardDatabaseApplication implements CommandLineRunner {
         Car car1 = Car.builder()
                 .brand("Ford")
                 .model("Mustang")
+                .color("white")
                 .registerNumber("AAA-111")
                 .year(2024)
                 .price(6400)
@@ -48,6 +52,7 @@ public class CardDatabaseApplication implements CommandLineRunner {
         Car car2 = Car.builder()
                 .brand("Hyndai")
                 .model("Genesis")
+                .color("black")
                 .registerNumber("HHH-111")
                 .year(2024)
                 .price(8500)
@@ -56,6 +61,7 @@ public class CardDatabaseApplication implements CommandLineRunner {
         Car car3 = Car.builder()
                 .brand("Kia")
                 .model("Sorento")
+                .color("gray")
                 .registerNumber("SSS-111")
                 .year(2024)
                 .price(4300)
@@ -69,5 +75,21 @@ public class CardDatabaseApplication implements CommandLineRunner {
         for(Car car : carRepository.findAll()) {
             log.info(car.toString());
         }
+
+        // username=user / password=user
+        User user1 = User.builder()
+                        .username("user")
+                        .password("$2y$10$Wjvcn1iZ10rshpI9/lZiseadHS/4qz1jIR/Y82r7Qsa8XuALxRUIC")
+                        .role("USER")
+                        .build();
+
+        // username=admin / password=admin
+        User user2 = User.builder()
+                        .username("admin")
+                        .password("$2y$10$juFbugpJS48OD8SBY.TQmeWzmuGBwNF7B/boWvuybxj5tYhhoIy/y")
+                        .role("ADMIN")
+                        .build();
+
+        userRepository.saveAll(Arrays.asList(user1, user2));
     }
 }
