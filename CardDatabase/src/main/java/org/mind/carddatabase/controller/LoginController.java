@@ -8,9 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,7 +20,7 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public ResponseEntity<?> getToken(@RequestBody AccountCredentials credentials) {
         // 인증에 알맞은 객체에 username/password 전달
         UsernamePasswordAuthenticationToken creds =
@@ -30,7 +29,7 @@ public class LoginController {
                         credentials.getPassword());
 
         // UserDetailsServiceImpl에 구현한 loadUserByUsername이 호출되어
-        // 사용자의 인증을 내부적으로 처리함
+        // 사용자의 인증을 DB와 확인하여 내부적으로 처리함
         Authentication auth = authenticationManager.authenticate(creds);
 
         // 토큰 발급
