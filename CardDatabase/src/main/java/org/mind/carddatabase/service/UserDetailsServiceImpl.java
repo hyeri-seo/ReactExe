@@ -39,6 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException("User not found : " + username);
         }
-        return null;
+        return builder.build();
     }
 }

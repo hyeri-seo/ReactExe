@@ -94,7 +94,7 @@ public class CardDatabaseApplication implements CommandLineRunner {
 				.role("ADMIN")
 				.build();
 
-		userRepository.save(user1);
-		userRepository.save(user2);
+//		userRepository.save(user1);
+//		userRepository.save(user2);
 	}
 }
